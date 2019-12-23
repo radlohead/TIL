@@ -2,6 +2,6 @@
 
 #### 작성된 파일들은 이곳에서 메뉴를 만들어서 링크를 적용합니다.
 
-[블로그 바로가기](https://www.notion.so/8016e428c8de4f689ee15585f29c202f)
+##### 블로그 개설
 
--   [2019년 회고](https://www.notion.so/2019-19-12-22-1894baadde9c4b4eb97886645a68ba95)
+[블로그 바로가기](https://www.notion.so/8016e428c8de4f689ee15585f29c202f)
