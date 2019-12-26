@@ -1,10 +1,12 @@
 <template>
   <div id="app">
+    <MessageToggle />
     <List :items="itemList" />
   </div>
 </template>
 
 <script>
+import MessageToggle from "@/components/MessageToggle.vue";
 import List from "./components/List";
 
 export default {
@@ -15,6 +17,7 @@ export default {
     };
   },
   components: {
+    MessageToggle,
     List
   }
 };
