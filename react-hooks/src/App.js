@@ -1,11 +1,12 @@
 import React from 'react'
-import Count from './components/Count'
+import { Count, UseStateExam } from './components/Count'
 
 function App() {
     return (
         <div>
             App
             <Count />
+            <UseStateExam />
         </div>
     )
 }
