@@ -1,5 +1,6 @@
 import React from 'react'
-import { Count, UseStateExam } from './components/Count'
+import { Count, UseStateExam } from 'components/Count'
+import { UseEffectExam } from 'components/UseEffectExam'
 
 function App() {
     return (
@@ -7,6 +8,7 @@ function App() {
             App
             <Count />
             <UseStateExam />
+            <UseEffectExam />
         </div>
     )
 }
