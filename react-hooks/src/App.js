@@ -2,6 +2,7 @@ import React from 'react'
 import { Count, UseStateExam } from 'components/Count'
 import { UseEffectExam } from 'components/UseEffectExam'
 import { UseContextExam } from 'components/UseContextExam'
+import UseReducerExam from 'components/UseReducerExam'
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
             <UseStateExam />
             <UseEffectExam />
             <UseContextExam />
+            <UseReducerExam />
         </div>
     )
 }
