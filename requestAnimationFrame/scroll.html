@@ -4,18 +4,20 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>requestAnimationFrame example</title>
+        <title>requestAnimationFrame scroll example</title>
         <style>
-            #move_box {
+            .root {
+                height: 2000px;
+            }
+            #move_btn {
                 position: absolute;
             }
         </style>
     </head>
     <body>
         <div class="root">
-            <div id="move_box">move box</div>
-            <button id="stop_btn">stop</button>
+            <button id="move_btn">move button</button>
         </div>
-        <script src="./index.js"></script>
+        <script src="./scroll.js"></script>
     </body>
 </html>
