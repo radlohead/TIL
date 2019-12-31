@@ -8,4 +8,16 @@ describe("CallbackFunc.vue", () => {
       expect(res).toEqual(wrapper.vm.isCallback);
     });
   });
+  it("callback async true function", async () => {
+    const wrapper = shallowMount(CallbackFunc);
+    const isCallbackState = true;
+    await wrapper.vm.fetchUser(isCallbackState);
+    expect(isCallbackState).toEqual(wrapper.vm.isCallback);
+  });
+  it("callback async false function", async () => {
+    const wrapper = shallowMount(CallbackFunc);
+    const isCallbackState = false;
+    await wrapper.vm.fetchUser(isCallbackState);
+    expect(isCallbackState).toEqual(wrapper.vm.isCallback);
+  });
 });
