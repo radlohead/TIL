@@ -14,10 +14,14 @@ export default {
       return this.users;
     },
     create(users) {
-      this.users.push(users);
+      this.users = users;
     },
-    destroy() {},
-    update() {}
+    destroy(id) {
+      this.users.splice(this.users.findIndex(item => item.id === id), 1);
+    },
+    update(id, newId) {
+      this.users[this.users.findIndex(item => item.id)] = newId;
+    }
   }
 };
 </script>
