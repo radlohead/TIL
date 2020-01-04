@@ -8,19 +8,22 @@ splitText.forEach(str => {
 })
 
 let char = 0
+let timer = null
 
 const onTick = () => {
     const span = text.querySelectorAll('span')[char]
     span.classList.add('fade')
     char++
     if (char === splitText.length) {
-        complete()
+        clearTick()
         return
     }
+    timer = window.requestAnimationFrame(onTick)
 }
-const complete = () => {
-    clearInterval(timer)
-    timer = null
+const clearTick = () => {
+    window.cancelAnimationFrame(timer)
 }
-
-let timer = setInterval(onTick, 50)
+const tickTask = () => {
+    setTimeout(onTick, 50)
+}
+tickTask()
