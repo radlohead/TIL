@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Header</h1>
+    <h1>{{ title }}</h1>
   </div>
 </template>
 
@@ -8,7 +8,9 @@
 export default {
   name: "Header",
   data() {
-    return {};
+    return {
+      title: "Header"
+    };
   }
 };
 </script>
