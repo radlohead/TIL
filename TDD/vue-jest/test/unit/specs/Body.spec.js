@@ -1,9 +1,9 @@
 import { shallowMount } from "@vue/test-utils";
-import Header from "@/components/Header";
+import Body from "@/components/Body";
 
-describe("Header.vue", () => {
+describe("Body", () => {
   it("title data", () => {
-    const wrapper = shallowMount(Header);
+    const wrapper = shallowMount(Body);
     expect(typeof wrapper.vm.title).toBe("string");
   });
 });
