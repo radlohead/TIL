@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <List />
+    <List :propsItem="propsItem" />
   </div>
 </template>
 
@@ -9,6 +9,11 @@ import List from "./containers/List";
 
 export default {
   name: "App",
+  data() {
+    return {
+      propsItem: ["props item1", "props item2"]
+    };
+  },
   components: {
     List
   }
