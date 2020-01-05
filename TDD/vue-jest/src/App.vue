@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <Header />
-    <Body />
+    <List />
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
+import List from "./containers/List";
 
 export default {
   name: "App",
   components: {
-    Header
+    List
   }
 };
 </script>
