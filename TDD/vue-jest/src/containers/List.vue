@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Header from "@/components/Header";
 import Body from "@/components/Body";
 
@@ -23,8 +24,22 @@ export default {
   },
   data() {
     return {
-      itemList: ["item1", "item2"]
+      itemList: ["item1", "item2"],
+      posts: []
     };
+  },
+  created() {
+    this.getPost();
+  },
+  methods: {
+    async getPost() {
+      return await axios.get("https://jsonplaceholder.typicode.com/posts/1", {
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        },
+        timeout: 5000
+      });
+    }
   },
   components: {
     Header,
