@@ -29,7 +29,7 @@ export default {
     };
   },
   created() {
-    this.getPost();
+    // this.getPost();
   },
   methods: {
     async getPost() {
@@ -38,6 +38,11 @@ export default {
           "Access-Control-Allow-Origin": "*"
         },
         timeout: 5000
+      });
+    },
+    getPost2() {
+      return new Promise(resolve => {
+        resolve({ data: true });
       });
     }
   },

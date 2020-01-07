@@ -1,6 +1,4 @@
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
-import { shallowMount, mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import List from "@/containers/List";
 
 describe("List", () => {
@@ -19,10 +17,15 @@ describe("List", () => {
       wrapper.props("propsItem").length
     );
   });
-  it("async posts", async () => {
+  it("async post", async () => {
     const wrapper = shallowMount(List);
     const response = await wrapper.vm.getPost();
     expect(response.data).toHaveProperty("userId", 1);
     expect(typeof response.data.title).toBe("string");
+  });
+  it("promise post2", async () => {
+    const wrapper = shallowMount(List);
+    const response = await wrapper.vm.getPost2();
+    expect(response).toHaveProperty("data", true);
   });
 });
