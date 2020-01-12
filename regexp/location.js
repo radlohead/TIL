@@ -42,7 +42,7 @@ log(locationUrl.protocol()) //https:
 log(locationUrl.host()) //developer.mozilla.org:8080
 log(locationUrl.hostname()) //developer.mozilla.org
 log(locationUrl.port()) //8080
-log(locationUrl.pathname()) ///en-US/search
+log(locationUrl.pathname()) // /en-US/search
 log(locationUrl.search()) //?q=URL
-log(locationUrl.hash()) //
+log(locationUrl.hash()) //#search-results-close-container
 log(locationUrl.origin()) //https://developer.mozilla.org:8080
