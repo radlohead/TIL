@@ -4,7 +4,9 @@ const url =
 
 class LocationURL {
     constructor(url) {
-        this.url = /(https:?)?(\/\/)?(.+(?=:))?(:[0-9]{4})/gi.exec(url)
+        this.url = /(https:?)?(\/\/)?(.+(?=:))?(:[0-9]{4})?(.+(?=\?))?(\?.+(?=\#))?(\#.+)/gi.exec(
+            url
+        )
     }
     href() {
         return this.url.input
@@ -21,6 +23,18 @@ class LocationURL {
     port() {
         return this.url[4].replace(/:/g, '')
     }
+    pathname() {
+        return this.url[5]
+    }
+    search() {
+        return this.url[6]
+    }
+    hash() {
+        return this.url[7]
+    }
+    origin() {
+        return this.url[1] + this.url[2] + this.url[3] + this.url[4]
+    }
 }
 const locationUrl = new LocationURL(url)
 log(locationUrl.href()) // https://developer.mozilla.org:8080/en-US/search?q=URL#search-results-close-container
@@ -28,13 +42,7 @@ log(locationUrl.protocol()) //https:
 log(locationUrl.host()) //developer.mozilla.org:8080
 log(locationUrl.hostname()) //developer.mozilla.org
 log(locationUrl.port()) //8080
-
-// console.log(url.href);      // https://developer.mozilla.org:8080/en-US/search?q=URL#search-results-close-container
-// console.log(url.protocol);  // https:
-// console.log(url.host);      // developer.mozilla.org:8080
-// console.log(url.hostname);  // developer.mozilla.org
-// console.log(url.port);      // 8080
-// console.log(url.pathname);  // /en-US/search
-// console.log(url.search);    // ?q=URL
-// console.log(url.hash);      // #search-results-close-container
-// console.log(url.origin);    // https://developer.mozilla.org:8080
+log(locationUrl.pathname()) ///en-US/search
+log(locationUrl.search()) //?q=URL
+log(locationUrl.hash()) //
+log(locationUrl.origin()) //https://developer.mozilla.org:8080
