@@ -60,4 +60,15 @@ describe("List.vue", () => {
     });
     expect(wrapper.findAll(".todo-wrap > li")).toHaveLength(3);
   });
+  test("handleClickRemoveTodo", () => {
+    const wrapper = shallowMount(List, {
+      data() {
+        return {
+          todoList: [1, 2, 3]
+        };
+      }
+    });
+    wrapper.vm.handleClickRemoveTodo(1);
+    expect(wrapper.vm.todoList).toEqual([1, 3]);
+  });
 });

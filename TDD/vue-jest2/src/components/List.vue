@@ -3,7 +3,10 @@
     <div>
       <input type="text" ref="inputText" class="inputText" />
       <ul class="todo-wrap">
-        <li v-for="(item, index) in todoList" :key="index">{{ item }}</li>
+        <li v-for="(item, index) in todoList" :key="index">
+          {{ item }}
+          <span class="delete-btn" @click="handleClickRemoveTodo(index)">삭제</span>
+        </li>
       </ul>
       <button @click="handleClickAddTodo">todo click</button>
     </div>
@@ -26,6 +29,9 @@ export default {
   },
   created() {},
   methods: {
+    handleClickRemoveTodo(index) {
+      this.todoList.splice(index, 1);
+    },
     handleClickAddTodo() {
       this.todoList.push(this.$refs.inputText.value);
     },

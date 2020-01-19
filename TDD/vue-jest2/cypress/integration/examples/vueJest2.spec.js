@@ -11,7 +11,7 @@ describe("vue-jest2", () => {
         expect($el).to.have.lengthOf(3);
       });
   });
-  it("todoList dom rendering", () => {
+  it("todoList add 2 is delete 1", () => {
     cy.get(".inputText").then($el => {
       $el[0].setAttribute("value", "aadff");
       cy.get("button").click();
@@ -25,5 +25,8 @@ describe("vue-jest2", () => {
       .then($el => {
         expect($el).to.have.lengthOf(2);
       });
+    cy.get(".delete-btn").then($el => {
+      $el.click();
+    });
   });
 });
