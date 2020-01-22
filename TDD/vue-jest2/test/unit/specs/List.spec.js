@@ -41,14 +41,12 @@ describe("List.vue", () => {
     expect(input.setValue).toEqual("abc");
   });
   test("handleClickAddTodo", () => {
-    const wrapper = shallowMount(List, {
-      data() {
-        return {
-          todoList: ["abcd"]
-        };
-      }
-    });
-    expect(wrapper.vm.todoList).toContain("abcd");
+    const wrapper = shallowMount(List);
+    wrapper.vm.$refs.inputText.value = "a";
+    wrapper.vm.handleClickAddTodo();
+    wrapper.vm.$refs.inputText.value = "b";
+    wrapper.vm.handleClickAddTodo();
+    expect(wrapper.vm.todoList).toEqual(["a", "b"]);
   });
   test("todoList li dom rendering", () => {
     const wrapper = shallowMount(List, {
