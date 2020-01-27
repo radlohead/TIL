@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>smooth scroll animation</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            nav {
+                position: fixed;
+            }
+            ul {
+                display: flex;
+                flex-direction: row;
+                list-style: none;
+            }
+            ul > li {
+                color: #fff;
+            }
+            section {
+                height: 500px;
+            }
+            #tab1 {
+                background-color: #999;
+            }
+            #tab2 {
+                background-color: #234343;
+            }
+            #tab3 {
+                background-color: #334fd4;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="#tab1">tab1</a> |</li>
+                <li><a href="#tab2">tab2</a> |</li>
+                <li><a href="#tab3">tab3</a></li>
+            </ul>
+        </nav>
+        <section id="tab1"></section>
+        <section id="tab2"></section>
+        <section id="tab3"></section>
+    </body>
+</html>
