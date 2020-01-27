@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>browser check</title>
+    </head>
+    <body>
+        <h1>browser check</h1>
+    </body>
+    <script>
+        const log = console.log
+        const browser = s => {
+            return navigator.userAgent.toLowerCase().indexOf(s) > -1
+                ? true
+                : false
+        }
+        log(browser('chrome')) // true
+    </script>
+</html>
