@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <meta name="appleid-signin-client-id" content="[CLIENT_ID]" />
+        <meta name="appleid-signin-scope" content="[SCOPES]" />
+        <meta name="appleid-signin-redirect-uri" content="[REDIRECT_URI]" />
+        <meta name="appleid-signin-state" content="[STATE]" />
+        <meta name="appleid-signin-use-popup" content="true" />
+        <!-- or false defaults to false -->
+    </head>
+    <body>
+        <div
+            id="appleid-signin"
+            data-color="black"
+            data-border="true"
+            data-type="sign in"
+        ></div>
+        <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+        <script>
+            AppleID.auth.init({
+                clientId: 'com.nexon.tpa.sign',
+                scope: 'email',
+                redirectURI: 'https://login.nexon.com/login/apple/AccessToken',
+                state:
+                    '~J24BrRhJGrE_8G5XEfO1rXcZX6~77Nsy1TBIERNKL7dPBSGoK874fOzCLWm_XSBkeJhqQb8XVbbYEkt2MCa~pEVDbq0t0tv7T5D0u_dH8RQ5SC7mvWowKFq8A_rO5aBtbe0GcAf6lDemRXzigC5jYngj9f',
+                usePopup: false //or false defaults to false
+            })
+        </script>
+    </body>
+</html>
