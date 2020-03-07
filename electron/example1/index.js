@@ -1,8 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 const url = require('url')
-// const os = require('os')
-const log = console.log
+
+const menuTemplate = require('./menuTemplate')
 
 // 전역객체로 선언
 let win
@@ -33,6 +33,9 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
+
+    const menu = Menu.buildFromTemplate(menuTemplate)
+    Menu.setApplicationMenu(menu)
 }
 
 // 사용 준비가 완료되면 윈도우를 오픈
