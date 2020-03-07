@@ -1,13 +1,22 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
+// const os = require('os')
+const log = console.log
 
 // 전역객체로 선언
 let win
 
 function createWindow() {
     // 브라우저 창을 만듬
-    win = new BrowserWindow({ width: 800, height: 600 })
+    win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    })
+
     // index.html을 로드
     win.loadURL(
         url.format({

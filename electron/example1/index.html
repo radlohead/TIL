@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Electron example</title>
+        <title>electron example1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <h1>hello world</h1>
+        <div id="root"></div>
+        <script>
+            const os = require('os')
+            const doc = document
+            const $qs = $ele => doc.querySelector($ele)
+            const rootEle = $qs('#root')
+            const createUlEle = doc.createElement('ul')
+            const osList = [os.arch(), os.platform(), os.totalmem()]
+            osList.forEach(osText => {
+                const createLiEle = doc.createElement('li')
+                createLiEle.innerText = osText
+                createUlEle.appendChild(createLiEle)
+            })
+            rootEle.appendChild(createUlEle)
+        </script>
     </body>
 </html>
