@@ -8,18 +8,54 @@
     <body>
         <div id="root"></div>
         <script>
-            const os = require('os')
             const doc = document
             const $qs = $ele => doc.querySelector($ele)
-            const rootEle = $qs('#root')
-            const createUlEle = doc.createElement('ul')
-            const osList = [os.arch(), os.platform(), os.totalmem()]
-            osList.forEach(osText => {
-                const createLiEle = doc.createElement('li')
-                createLiEle.innerText = osText
-                createUlEle.appendChild(createLiEle)
-            })
-            rootEle.appendChild(createUlEle)
+
+            // os_list 태그에 os 정보 동적 삽입 생성
+            const createTagOsList = () => {
+                const os = require('os')
+                const rootEle = $qs('#root')
+                const createUlEle = doc.createElement('ul.os_list')
+                const osList = [os.arch(), os.platform(), os.totalmem()]
+                osList.forEach(osText => {
+                    const createLiEle = doc.createElement('li')
+                    createLiEle.innerText = osText
+                    createUlEle.appendChild(createLiEle)
+                })
+                rootEle.appendChild(createUlEle)
+            }
+            createTagOsList()
+
+            // contextmenu 생성
+            const { remote } = require('electron')
+            const { Menu, MenuItem } = remote
+
+            const menu = new Menu()
+            menu.append(
+                new MenuItem({
+                    label: 'MenuItem1',
+                    click() {
+                        console.log('item 1 clicked')
+                    }
+                })
+            )
+            menu.append(new MenuItem({ type: 'separator' }))
+            menu.append(
+                new MenuItem({
+                    label: 'MenuItem2',
+                    type: 'checkbox',
+                    checked: true
+                })
+            )
+
+            window.addEventListener(
+                'contextmenu',
+                e => {
+                    e.preventDefault()
+                    menu.popup()
+                },
+                false
+            )
         </script>
     </body>
 </html>
