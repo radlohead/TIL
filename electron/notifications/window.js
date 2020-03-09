@@ -20,6 +20,8 @@ function doNotify(evt) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('basic').addEventListener('click', doNotify)
+    document.querySelector('#basic').addEventListener('click', () => {
+        new Notification(options[0].title, options[1])
+    })
     document.getElementById('image').addEventListener('click', doNotify)
 })
