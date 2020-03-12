@@ -42,3 +42,9 @@ app.on('will-quit', () => {
 })
 
 console.log('isReady: ', app.isReady()) //false
+
+// whenReady는 Promise를 반환하고 isReady 메소드를 내부에서 호출하면 true가 되는 시점에 값을 반환한다.
+app.whenReady().then(res => {
+    console.log('whenReady1: ', res) // undefined
+    console.log('whenReady2: ', app.isReady()) // true
+})
