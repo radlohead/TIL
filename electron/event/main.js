@@ -6,6 +6,7 @@ let win
 
 function createWindow() {
     console.log('ready')
+    console.log('isReady: ', app.isReady()) // true
     win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -39,3 +40,5 @@ app.on('before-quit', () => {
 app.on('will-quit', () => {
     console.log('will-quit')
 })
+
+console.log('isReady: ', app.isReady()) //false
