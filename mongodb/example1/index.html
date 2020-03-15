@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>mongodb</title>
+    </head>
+    <body>
+        <div id="root">
+            <ul class="list"></ul>
+        </div>
+        <script>
+            const renderToList = async () => {
+                const responseData = await fetch(
+                    'http://localhost:4000/api/books'
+                )
+                const response = await responseData.json()
+                const listEle = document.querySelector('.list')
+                const createFragmentEle = document.createDocumentFragment()
+                response.forEach(ele => {
+                    const createListItemEle = document.createElement('li')
+                    createListItemEle.innerText = ele.title
+                    createFragmentEle.appendChild(createListItemEle)
+                })
+                listEle.appendChild(createFragmentEle)
+            }
+            renderToList()
+        </script>
+    </body>
+</html>
