@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>php - array</title>
+    </head>
+    <body>
+        <div id="root">
+            <ul>
+                <?php 
+                $list['corn'] = '노랑';
+                $list['beet'] = '빨강';
+                $list['carrot'] = '주황';
+                foreach($list as $key){
+                    echo "<li>$key</li>";
+                } 
+                ?>
+            </ul>
+
+            <ul>
+                <li>
+                    <?php 
+                    $list2 = array('커피빈','스타벅스','메가커피');
+                    print implode('</li><li>', $list2);
+                    ?>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
