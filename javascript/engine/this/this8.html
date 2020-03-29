@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>bind() 활용, 이벤트 처리</title>
+    </head>
+    <body>
+        <div id="point">click</div>
+        <script>
+            // bind() 활용, 이벤트 처리
+            var book = {
+                myPoint: 100,
+                setEvent: function() {
+                    var node = document.getElementById('point')
+                    node.onclick = this.show.bind(book, node)
+                },
+                show: function(node, event) {
+                    console.log(node.textContent) // click
+                    console.log(this.myPoint) // 100
+                }
+            }
+            book.setEvent()
+
+            console.dir('------------------------')
+
+            // 위의 문법에서 es6+로 수정
+            var book2 = {
+                myPoint: 100,
+                setEvent: () => {
+                    const node = document.querySelector('#point')
+                    const callback = e => {
+                        book2.show.bind(book, e.target)
+                    }
+                    node.addEventListener('click', callback)
+                },
+                show: (node, event) => {
+                    console.log(node.textContent) // click
+                    console.log(this.myPoint) // 100
+                }
+            }
+            book2.setEvent()
+        </script>
+    </body>
+</html>
