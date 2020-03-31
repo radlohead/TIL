@@ -5,11 +5,20 @@
 </template>
 
 <script>
+    import { instance } from '@/api/index'
     import HelloWorld from './components/HelloWorld.vue'
 
     export default {
         name: 'App',
-        created() {},
+        created() {
+            this.fetchPost()
+        },
+        methods: {
+            async fetchPost() {
+                const response = await instance.get('/posts/1')
+                console.log(response.data)
+            }
+        },
         components: {
             HelloWorld
         }
