@@ -15,8 +15,8 @@
         },
         methods: {
             async fetchPost() {
-                const response = await instance.get('/posts/1')
-                console.log(response.data)
+                const { data } = await instance.get('/posts/1')
+                console.log(data)
             }
         },
         components: {
