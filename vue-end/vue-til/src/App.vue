@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <HelloWorld msg="Welcome to Your Vue.js App" />
+        <h1>{{ title }}</h1>
         <ul>
             <li>userId: {{ post.userId }}</li>
             <li>title: {{ post.title }}</li>
@@ -17,11 +18,23 @@
         name: 'App',
         data() {
             return {
+                title: 'one',
                 post: {}
             }
         },
         created() {
+            this.$nextTick(() => {
+                console.log('created nextTick')
+            })
             this.fetchPost()
+        },
+        mounted() {
+            console.log('mounted')
+            this.title = 'two'
+
+            this.$nextTick(() => {
+                this.title = 'three'
+            })
         },
         methods: {
             async fetchPost() {
