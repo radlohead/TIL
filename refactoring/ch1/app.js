@@ -11,37 +11,49 @@ const statement = (invoice, plays) => {
         minimumFractionDigits: 2
     }).format
 
-    for (let perf of invoice.performances) {
-        const play = plays[perf.playID]
-        let thisAmount = 0
+    function playFor(aperformance) {
+        return plays[aperformance.playID]
+    }
+    function amountFor(aperformance) {
+        let result = 0
 
-        switch (play.type) {
+        switch (playFor(aperformance).type) {
             case 'tragedy': //비극
-                thisAmount = 40000
-                if (perf.audience > 30) {
-                    thisAmount += 1000 * (perf.audience - 30)
+                result = 40000
+                if (aperformance.audience > 30) {
+                    result += 1000 * (aperformance.audience - 30)
                 }
                 break
             case 'comedy': //희극
-                thisAmount = 30000
-                if (perf.audience > 20) {
-                    thisAmount += 1000 + 500 * (perf.audience - 20)
+                result = 30000
+                if (aperformance.audience > 20) {
+                    result += 1000 + 500 * (aperformance.audience - 20)
                 }
                 break
             default:
-                throw new Error(`알 수 없는 장르: ${play.type}`)
+                throw new Error(
+                    `알 수 없는 장르: ${playFor(aperformance).type}`
+                )
         }
-        // 포인트를 적립한다
-        volumeCredits += Math.max(perf.audience - 30, 0)
-        // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if ('comedy' === play.type) {
-            volumeCredits += Math.floor(perf.audience / 5)
+        return result
+    }
+    function volumeCreditsFor(aperformance) {
+        let volumeCredits = 0
+        volumeCredits += Math.max(aperformance.audience - 30, 0)
+        if ('comedy' === playFor(aperformance).type) {
+            volumeCredits += Math.floor(aperformance.audience / 5)
         }
+        return volumeCredits
+    }
+
+    for (let perf of invoice.performances) {
+        volumeCredits += volumeCreditsFor(perf)
+
         // 청구 내역을 출력한다.
-        result += `${play.name}: ${format(thisAmount / 100)} (${
+        result += `${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
             perf.audience
         }석)\n`
-        totalAmount += thisAmount
+        totalAmount += amountFor(perf)
     }
     result += `총액: ${format(totalAmount / 100)}\n`
     result += `적립 포인트: ${volumeCredits}점\n`
