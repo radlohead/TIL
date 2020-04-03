@@ -1,15 +1,12 @@
 const invoicesJSON = require('./invoices.json')
 const playsJSON = require('./plays.json')
 
-const statement = (invoice, plays) => {
-    return renderPlainText(invoice, plays)
-}
-function renderPlainText(invoice, plays) {
-    let result = `청구 내역 (고객명: ${invoice.customer})\n`
+function renderPlainText(data, plays) {
+    let result = `청구 내역 (고객명: ${data.customer})\n`
 
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
         // 청구 내역을 출력한다.
-        result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${
+        result += `${perf.play.name}: ${usd(amountFor(perf))} (${
             perf.audience
         }석)\n`
     }
@@ -25,13 +22,11 @@ function renderPlainText(invoice, plays) {
             minimumFractionDigits: 2
         }).format(aNumber / 100)
     }
-    function playFor(aperformance) {
-        return plays[aperformance.playID]
-    }
+
     function amountFor(aperformance) {
         let result = 0
 
-        switch (playFor(aperformance).type) {
+        switch (aperformance.play.type) {
             case 'tragedy': //비극
                 result = 40000
                 if (aperformance.audience > 30) {
@@ -45,33 +40,46 @@ function renderPlainText(invoice, plays) {
                 }
                 break
             default:
-                throw new Error(
-                    `알 수 없는 장르: ${playFor(aperformance).type}`
-                )
+                throw new Error(`알 수 없는 장르: ${aperformance.play.type}`)
         }
         return result
     }
     function volumeCreditsFor(aperformance) {
         let volumeCredits = 0
         volumeCredits += Math.max(aperformance.audience - 30, 0)
-        if ('comedy' === playFor(aperformance).type) {
+        if ('comedy' === aperformance.play.type) {
             volumeCredits += Math.floor(aperformance.audience / 5)
         }
         return volumeCredits
     }
     function totalVolumeCredits() {
         let volumeCredits = 0
-        for (let perf of invoice.performances) {
+        for (let perf of data.performances) {
             volumeCredits += volumeCreditsFor(perf)
         }
         return volumeCredits
     }
     function totalAmount() {
         let totalAmount = 0
-        for (let perf of invoice.performances) {
+        for (let perf of data.performances) {
             totalAmount += amountFor(perf)
         }
         return totalAmount
+    }
+}
+const statement = (invoice, plays) => {
+    const statementData = {}
+    statementData.customer = invoice.customer
+    statementData.performances = invoice.performances.map(enrichPerformance)
+    return renderPlainText(statementData, plays)
+
+    function enrichPerformance(aPerformance) {
+        const result = Object.assign({}, aPerformance)
+        result.play = playFor(result)
+        return result
+    }
+    function playFor(aPerformance) {
+        return plays[aPerformance.playID]
     }
 }
 statement(invoicesJSON[0], playsJSON)
