@@ -17,12 +17,7 @@ class PerformanceCalculator {
         throw new Error('하위 클래스에서 처리')
     }
     get volumeCredits() {
-        let volumeCredits = 0
-        volumeCredits += Math.max(this.performances.audience - 30, 0)
-        if ('comedy' === this.play.type) {
-            volumeCredits += Math.floor(this.performances.audience / 5)
-        }
-        return volumeCredits
+        return Math.max(this.performances.audience - 30, 0)
     }
 }
 class TragedyCalculator extends PerformanceCalculator {
@@ -41,6 +36,9 @@ class ComedyCalculator extends PerformanceCalculator {
             result += 1000 + 500 * (this.performances.audience - 20)
         }
         return result
+    }
+    get volumeCredits() {
+        return super.volumeCredits + Math.floor(this.performances.audience / 5)
     }
 }
 
