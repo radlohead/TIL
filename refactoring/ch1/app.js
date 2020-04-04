@@ -55,7 +55,7 @@ function renderHTML(data) {
     return result
 }
 statement(invoicesJSON[0], playsJSON)
-console.log(htmlStatement(invoicesJSON[0], playsJSON))
+// console.log(htmlStatement(invoicesJSON[0], playsJSON))
 
 function test() {
     const t1 =

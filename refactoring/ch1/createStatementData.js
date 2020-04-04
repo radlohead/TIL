@@ -24,6 +24,14 @@ class PerormanceCalculator {
         }
         return result
     }
+    get volumeCredits() {
+        let volumeCredits = 0
+        volumeCredits += Math.max(this.performances.audience - 30, 0)
+        if ('comedy' === this.play.type) {
+            volumeCredits += Math.floor(this.performances.audience / 5)
+        }
+        return volumeCredits
+    }
 }
 
 function createStatementData(invoice, plays) {
@@ -41,24 +49,12 @@ function createStatementData(invoice, plays) {
         )
         const result = Object.assign({}, aPerformance)
         result.play = calculator.play
-        result.amount = amountFor(result)
-        result.volumeCredits = volumeCreditsFor(result)
+        result.amount = calculator.amount
+        result.volumeCredits = calculator.volumeCredits
         return result
     }
     function playFor(aPerformance) {
         return plays[aPerformance.playID]
-    }
-    function amountFor(aPerformance) {
-        return new PerormanceCalculator(aPerformance, playFor(aPerformance))
-            .amount
-    }
-    function volumeCreditsFor(aperformance) {
-        let volumeCredits = 0
-        volumeCredits += Math.max(aperformance.audience - 30, 0)
-        if ('comedy' === aperformance.play.type) {
-            volumeCredits += Math.floor(aperformance.audience / 5)
-        }
-        return volumeCredits
     }
     function totalAmount(data) {
         return data.performances.reduce((total, p) => total + p.amount, 0)
