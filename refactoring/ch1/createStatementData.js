@@ -1,3 +1,31 @@
+class PerormanceCalculator {
+    constructor(aPerformance, aPlay) {
+        this.performances = aPerformance
+        this.play = aPlay
+    }
+    get amount() {
+        let result = 0
+
+        switch (this.play.type) {
+            case 'tragedy': //비극
+                result = 40000
+                if (this.performances.audience > 30) {
+                    result += 1000 * (this.performances.audience - 30)
+                }
+                break
+            case 'comedy': //희극
+                result = 30000
+                if (this.performances.audience > 20) {
+                    result += 1000 + 500 * (this.performances.audience - 20)
+                }
+                break
+            default:
+                throw new Error(`알 수 없는 장르: ${this.play.type}`)
+        }
+        return result
+    }
+}
+
 function createStatementData(invoice, plays) {
     const statementData = {}
     statementData.customer = invoice.customer
@@ -7,8 +35,12 @@ function createStatementData(invoice, plays) {
     return statementData
 
     function enrichPerformance(aPerformance) {
+        const calculator = new PerormanceCalculator(
+            aPerformance,
+            playFor(aPerformance)
+        )
         const result = Object.assign({}, aPerformance)
-        result.play = playFor(result)
+        result.play = calculator.play
         result.amount = amountFor(result)
         result.volumeCredits = volumeCreditsFor(result)
         return result
@@ -16,26 +48,9 @@ function createStatementData(invoice, plays) {
     function playFor(aPerformance) {
         return plays[aPerformance.playID]
     }
-    function amountFor(aperformance) {
-        let result = 0
-
-        switch (aperformance.play.type) {
-            case 'tragedy': //비극
-                result = 40000
-                if (aperformance.audience > 30) {
-                    result += 1000 * (aperformance.audience - 30)
-                }
-                break
-            case 'comedy': //희극
-                result = 30000
-                if (aperformance.audience > 20) {
-                    result += 1000 + 500 * (aperformance.audience - 20)
-                }
-                break
-            default:
-                throw new Error(`알 수 없는 장르: ${aperformance.play.type}`)
-        }
-        return result
+    function amountFor(aPerformance) {
+        return new PerormanceCalculator(aPerformance, playFor(aPerformance))
+            .amount
     }
     function volumeCreditsFor(aperformance) {
         let volumeCredits = 0
