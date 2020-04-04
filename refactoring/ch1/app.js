@@ -6,12 +6,12 @@ function renderPlainText(data, plays) {
 
     for (let perf of data.performances) {
         // 청구 내역을 출력한다.
-        result += `${perf.play.name}: ${usd(amountFor(perf))} (${
+        result += `${perf.play.name}: ${usd(perf.amount)} (${
             perf.audience
         }석)\n`
     }
-    result += `총액: ${usd(totalAmount())}\n`
-    result += `적립 포인트: ${totalVolumeCredits()}점\n`
+    result += `총액: ${usd(data.totalAmount)}\n`
+    result += `적립 포인트: ${data.totalVolumeCredits}점\n`
     console.log(result)
     return result
 
@@ -22,7 +22,25 @@ function renderPlainText(data, plays) {
             minimumFractionDigits: 2
         }).format(aNumber / 100)
     }
+}
+const statement = (invoice, plays) => {
+    const statementData = {}
+    statementData.customer = invoice.customer
+    statementData.performances = invoice.performances.map(enrichPerformance)
+    statementData.totalAmount = totalAmount(statementData)
+    statementData.totalVolumeCredits = totalVolumeCredits(statementData)
+    return renderPlainText(statementData, plays)
 
+    function enrichPerformance(aPerformance) {
+        const result = Object.assign({}, aPerformance)
+        result.play = playFor(result)
+        result.amount = amountFor(result)
+        result.volumeCredits = volumeCreditsFor(result)
+        return result
+    }
+    function playFor(aPerformance) {
+        return plays[aPerformance.playID]
+    }
     function amountFor(aperformance) {
         let result = 0
 
@@ -52,34 +70,19 @@ function renderPlainText(data, plays) {
         }
         return volumeCredits
     }
-    function totalVolumeCredits() {
-        let volumeCredits = 0
-        for (let perf of data.performances) {
-            volumeCredits += volumeCreditsFor(perf)
-        }
-        return volumeCredits
-    }
-    function totalAmount() {
+    function totalAmount(data) {
         let totalAmount = 0
         for (let perf of data.performances) {
-            totalAmount += amountFor(perf)
+            totalAmount += perf.amount
         }
         return totalAmount
     }
-}
-const statement = (invoice, plays) => {
-    const statementData = {}
-    statementData.customer = invoice.customer
-    statementData.performances = invoice.performances.map(enrichPerformance)
-    return renderPlainText(statementData, plays)
-
-    function enrichPerformance(aPerformance) {
-        const result = Object.assign({}, aPerformance)
-        result.play = playFor(result)
-        return result
-    }
-    function playFor(aPerformance) {
-        return plays[aPerformance.playID]
+    function totalVolumeCredits(data) {
+        let volumeCredits = 0
+        for (let perf of data.performances) {
+            volumeCredits += perf.volumeCredits
+        }
+        return volumeCredits
     }
 }
 statement(invoicesJSON[0], playsJSON)
