@@ -71,18 +71,13 @@ const statement = (invoice, plays) => {
         return volumeCredits
     }
     function totalAmount(data) {
-        let totalAmount = 0
-        for (let perf of data.performances) {
-            totalAmount += perf.amount
-        }
-        return totalAmount
+        return data.performances.reduce((total, p) => total + p.amount, 0)
     }
     function totalVolumeCredits(data) {
-        let volumeCredits = 0
-        for (let perf of data.performances) {
-            volumeCredits += perf.volumeCredits
-        }
-        return volumeCredits
+        return data.performances.reduce(
+            (total, p) => total + p.volumeCredits,
+            0
+        )
     }
 }
 statement(invoicesJSON[0], playsJSON)
