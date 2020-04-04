@@ -3,7 +3,9 @@
         <h1 class="title">{{ msg }}</h1>
         <div id="app">
             <div v-for="item in list" :key="item">
-                <p :class="bindId(item)">{{ item }}</p>
+                <p :class="[bindId(item), { red: isRedColor }]">
+                    {{ item }}
+                </p>
             </div>
         </div>
     </div>
@@ -17,16 +19,16 @@
         },
         data() {
             return {
-                list: []
+                list: [],
+                isRedColor: false
             }
         },
         created() {
-            for (var i = 0; i < 3; i++) {
+            for (let i = 0; i < 3; i++) {
                 this._data.list.push(i)
             }
             this.$nextTick(() => {
-                var dom = document.querySelector('.item-0')
-                dom.style.backgroundColor = 'red'
+                this.isRedColor = true
             })
         },
         methods: {
