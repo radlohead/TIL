@@ -29,7 +29,6 @@
             this.fetchPost()
         },
         mounted() {
-            console.log('mounted')
             this.title = 'two'
 
             this.$nextTick(() => {
@@ -37,9 +36,17 @@
             })
         },
         methods: {
-            async fetchPost() {
-                const { data } = await instance.get('/posts/1')
-                this.post = data
+            fetchPost() {
+                // const { data } = await instance.get('/posts/1')
+                // this.post = data
+                return instance
+                    .get('/posts/1')
+                    .then(res => {
+                        return Promise.resolve(res)
+                    })
+                    .catch(err => {
+                        console.error(err)
+                    })
             }
         },
         components: {
