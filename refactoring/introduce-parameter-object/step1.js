@@ -24,7 +24,9 @@ readingsOutsideRange(
 // 변경 후
 function readingsOutsideRange(station, range) {
     return station.readings.filter(
-        (r) => r.temp < range.min || r.temp > range.max
+        // 기존 로직을 contains 메소드를 생성해서 호출
+        // return r.temp < range.min || r.temp > range.max
+        (r) => !range.contains(r.temp)
     )
 }
 
@@ -37,6 +39,9 @@ class NumberRange {
     }
     get max() {
         return this._data.max
+    }
+    contains(arg) {
+        return arg >= this.min && arg <= this.max
     }
 }
 const range = new NumberRange(
