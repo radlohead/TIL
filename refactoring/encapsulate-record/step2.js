@@ -32,20 +32,41 @@ function compareUsage(customerID, laterYear, month) {
 }
 
 // 변경 후
-function getRawDataOfCustomers() {
+function getCustomerData() {
     return customerData
 }
+function getRawDataOfCustomers() {
+    return customerData._data
+}
 function setRawDataOfCustomers(arg) {
-    customerData = arg
+    customerData = new CustomerData(arg)
+}
+function setUsage(customerID, year, month, amount) {
+    getRawDataOfCustomers()[customerID].usages[year][month] = amount
 }
 // 쓰기 예
 getRawDataOfCustomers()[customerID].usages[year][month] = amount
+setUsage(customerID, year, month, amount)
+getCustomerData().setUsage(customerID, year, month, amount)
 
 // 읽기 예
 function compareUsage(customerID, laterYear, month) {
-    const later = getRawDataOfCustomers()[customerID].usages[laterYear][month]
-    const earlier = getRawDataOfCustomers()[customerID].usages[laterYear - 1][
-        month
-    ]
+    const later = getCustomerData().rawData(customerID, laterYear, month)
+    const earlier = getCustomerData().rawData(customerID, laterYear - 1, month)
     return { laterAmount: later, change: later - earlier }
+}
+
+class CustomerData {
+    constructor(data) {
+        this._data = data
+    }
+    usage(customerID, year, month) {
+        return this._data[customerID].usages[year][month]
+    }
+    setUsage(customerID, year, month, amount) {
+        this._data[customerID].usages[year][month] = amount
+    }
+    get rawData() {
+        return JSON.parse(JSON.stringify(this._data))
+    }
 }
