@@ -3,7 +3,6 @@ import {View, Text} from 'react-native';
 import PropTypes from 'prop-types';
 
 function Weather({temp}) {
-  console.log(111, temp);
   return (
     <View>
       <Text>{temp}</Text>

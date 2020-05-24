@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, SafeAreaView, View, Text} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default class App extends Component {
-  state = {
-    isLoaded: false,
-    error: null,
-    temp: null,
-    weatherName: null,
-  };
-  componentDidMount() {
+const App = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
+  const [temp, setTemp] = useState(null);
+  const [weatherName, setWeatherName] = useState('');
+
+  const getLocation = useCallback(() => {
     Geolocation.getCurrentPosition(
       (position) => {
         fetch(
@@ -18,43 +17,43 @@ export default class App extends Component {
         )
           .then((response) => response.json())
           .then((json) => {
-            this.setState({
-              isLoaded: true,
-              temp: json.main.temp,
-              weatherName: json.weather[0].main,
-            });
+            setWeatherName(json.weather[0].main);
+            setTemp(json.main.temp);
+            setIsLoaded(true);
           });
       },
       (error) => {
-        this.setState({
-          error,
-        });
+        setError(error);
       },
     );
-  }
-  render() {
-    const {isLoaded, error, temp, weatherName} = this.state;
-    return (
-      <SafeAreaView style={styles.container}>
-        {isLoaded ? (
-          <LinearGradient
-            colors={weatherCases[weatherName].colors}
-            style={styles.weatherContainer}>
-            <View>
-              <Text>icon</Text>
-              <Text style={styles.temp}>{Math.floor(temp - 273.15)}º</Text>
-            </View>
-          </LinearGradient>
-        ) : (
-          <View style={styles.loading}>
-            <Text style={styles.loadingText}>Getting the weather</Text>
-            {error && <Text>{error}</Text>}
+  }, [isLoaded, error, temp, weatherName]);
+
+  useEffect(() => {
+    getLocation();
+  });
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {isLoaded ? (
+        <LinearGradient
+          colors={weatherCases[weatherName].colors}
+          style={styles.weatherContainer}>
+          <View>
+            <Text>icon</Text>
+            <Text style={styles.temp}>{Math.floor(temp - 273.15)}º</Text>
           </View>
-        )}
-      </SafeAreaView>
-    );
-  }
-}
+        </LinearGradient>
+      ) : (
+        <View style={styles.loading}>
+          <Text style={styles.loadingText}>Getting the weather</Text>
+          {error && <Text>{error}</Text>}
+        </View>
+      )}
+    </SafeAreaView>
+  );
+};
+
+export default App;
 
 const weatherCases = {
   Rain: {
