@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, SafeAreaView, View, Text} from 'react-native';
+import {StyleSheet, SafeAreaView, View, Text, Image} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -11,16 +12,14 @@ const App = () => {
 
   const getLocation = useCallback(() => {
     Geolocation.getCurrentPosition(
-      (position) => {
-        fetch(
+      async (position) => {
+        const response = await fetch(
           `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=478fc5b3477f7b31dfbc56cac9229157`,
-        )
-          .then((response) => response.json())
-          .then((json) => {
-            setWeatherName(json.weather[0].main);
-            setTemp(json.main.temp);
-            setIsLoaded(true);
-          });
+        );
+        const responseJson = await response.json();
+        setWeatherName(responseJson.weather[0].main);
+        setTemp(responseJson.main.temp);
+        setIsLoaded(true);
       },
       (error) => {
         setError(error);
@@ -30,7 +29,7 @@ const App = () => {
 
   useEffect(() => {
     getLocation();
-  });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,9 +37,19 @@ const App = () => {
         <LinearGradient
           colors={weatherCases[weatherName].colors}
           style={styles.weatherContainer}>
-          <View>
-            <Text>icon</Text>
+          <View style={styles.upper}>
+            <Icon
+              name={weatherCases[weatherName].icon}
+              style={styles.icon}
+              size={144}
+            />
             <Text style={styles.temp}>{Math.floor(temp - 273.15)}º</Text>
+          </View>
+          <View style={styles.lower}>
+            <Text style={styles.title}>{weatherCases[weatherName].title}</Text>
+            <Text style={styles.subtitle}>
+              {weatherCases[weatherName].subtitle}
+            </Text>
           </View>
         </LinearGradient>
       ) : (
@@ -114,11 +123,31 @@ const styles = StyleSheet.create({
   weatherContainer: {
     flex: 1,
     justifyContent: 'center',
+  },
+  upper: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    color: 'white',
   },
   temp: {
     color: 'white',
-    fontSize: 38,
+    fontSize: 48,
+  },
+  lower: {
+    justifyContent: 'flex-end',
+    paddingLeft: 20,
+    paddingBottom: 20,
+  },
+  title: {
+    color: 'white',
+    fontSize: 30,
+  },
+  subtitle: {
+    color: 'white',
+    fontSize: 30,
   },
   loading: {
     flex: 1,
