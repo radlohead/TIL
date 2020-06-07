@@ -1,3 +1,4 @@
+const path = require('path')
 const electron = require('electron')
 // 애플리케이션 생명주기를 조작 하는 모듈.
 const { app } = electron
@@ -11,8 +12,8 @@ let win
 function createWindow() {
     // 새로운 브라우저 창을 생성합니다.
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1000,
+        height: 800,
         webPreferences: {
             nodeIntegration: true,
         },
@@ -53,4 +54,8 @@ app.on('activate', () => {
     if (win === null) {
         createWindow()
     }
+})
+
+require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
 })
