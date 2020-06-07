@@ -4,13 +4,17 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "electron ."
+        "dev": "electron .",
+        "build": "electron-builder"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "electron": "9.0.2",
         "electron-reload": "1.5.0"
+    },
+    "devDependencies": {
+        "electron": "9.0.2",
+        "electron-builder": "22.7.0"
     }
 }
