@@ -62,3 +62,45 @@ del dictionary['name']
 del dictionary['type']
 
 print(dictionary)  # {}
+
+
+# range ------------------------------
+print(list(range(5)))  # [0, 1, 2, 3, 4]
+
+
+# min, max, sum ------------------------------
+numbers = [10, 20, 30]
+print(min(numbers))  # 10
+print(max(numbers))  # 30
+print(sum(numbers))  # 60
+
+
+# reversed ------------------------------
+numbers = [10, 20, 30]
+numbers_reversed = reversed(numbers)
+
+for i in numbers_reversed:
+    print(i)  # 30 20 10
+
+
+# enumerate ------------------------------
+ex_list = ['요소A', '요소B', '요소C']
+
+print(list(enumerate(ex_list)))  # [(0, '요소A'), (1, '요소B'), (2, '요소C')]
+
+for i, value in enumerate(ex_list):
+    print(i, value)  # 0 요소A  1 요소B  2 요소C
+
+
+# 괄호로 문자열 연결하기 ------------------------------
+test = (
+    '괄호로 '
+    '문자열 '
+    '연결하기'
+)
+print(test)  # 괄호로 문자열 연결하기
+
+
+# join ------------------------------
+print("".join(['1', '2', '3']))  # 123
+print("..".join(['1', '2', '3']))  # 1..2..3
