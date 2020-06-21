@@ -1,21 +1,8 @@
-
 export default {
-  name: 'NuxtChild',
+  name: 'nuxt-child',
   functional: true,
-  props: {
-    nuxtChildKey: {
-      type: String,
-      default: ''
-    },
-    keepAlive: Boolean,
-    keepAliveProps: {
-      type: Object,
-      default: undefined
-    }
-  },
-  render (_, { parent, data, props }) {
-    const h = parent.$createElement
-
+  props: ['keepAlive'],
+  render (h, { parent, data, props }) {
     data.nuxtChild = true
     const _parent = parent
     const transitions = parent.$nuxt.nuxt.transitions
@@ -30,60 +17,37 @@ export default {
     }
     data.nuxtChildDepth = depth
     const transition = transitions[depth] || defaultTransition
-    const transitionProps = {}
+    let transitionProps = {}
     transitionsKeys.forEach((key) => {
       if (typeof transition[key] !== 'undefined') {
         transitionProps[key] = transition[key]
       }
     })
-
-    const listeners = {}
+    let listeners = {}
     listenersKeys.forEach((key) => {
       if (typeof transition[key] === 'function') {
         listeners[key] = transition[key].bind(_parent)
       }
     })
-    if (process.client) {
-      // Add triggerScroll event on beforeEnter (fix #1376)
-      const beforeEnter = listeners.beforeEnter
-      listeners.beforeEnter = (el) => {
-        // Ensure to trigger scroll event after calling scrollBehavior
-        window.$nuxt.$nextTick(() => {
-          window.$nuxt.$emit('triggerScroll')
-        })
-        if (beforeEnter) {
-          return beforeEnter.call(_parent, el)
-        }
-      }
+    // Add triggerScroll event on beforeEnter (fix #1376)
+    let beforeEnter = listeners.beforeEnter
+    listeners.beforeEnter = (el) => {
+      window.$nuxt.$emit('triggerScroll')
+      if (beforeEnter) return beforeEnter.call(_parent, el)
     }
 
-    // make sure that leave is called asynchronous (fix #5703)
-    if (transition.css === false) {
-      const leave = listeners.leave
-
-      // only add leave listener when user didnt provide one
-      // or when it misses the done argument
-      if (!leave || leave.length < 2) {
-        listeners.leave = (el, done) => {
-          if (leave) {
-            leave.call(_parent, el)
-          }
-
-          _parent.$nextTick(done)
-        }
-      }
+    let routerView = [
+      h('router-view', data)
+    ]
+    if (typeof props.keepAlive !== 'undefined') {
+      routerView = [
+        h('keep-alive', routerView)
+      ]
     }
-
-    let routerView = h('routerView', data)
-
-    if (props.keepAlive) {
-      routerView = h('keep-alive', { props: props.keepAliveProps }, [routerView])
-    }
-
     return h('transition', {
       props: transitionProps,
       on: listeners
-    }, [routerView])
+    }, routerView)
   }
 }
 

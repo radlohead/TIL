@@ -1,8 +1,0 @@
-[
-  {
-    "name": "index",
-    "path": "/",
-    "component": "/Users/apple/Desktop/dev/TIL/ssr/example1/pages/index.vue",
-    "chunkName": "pages/index"
-  }
-]

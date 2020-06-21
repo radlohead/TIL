@@ -1,5 +1,5 @@
 {
-  "name": "example1",
+  "name": "example2",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "radlohead <radlohead@naver.com>",
@@ -7,19 +7,14 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "rm -r ./dist && node build/build.js",
-    "ssrDev": "nuxt",
-    "ssrGenerate": "rm -r ./dist && nuxt build && nuxt generate"
+    "build": "node build/build.js"
   },
   "dependencies": {
-    "nuxt": "1.4.5",
     "vue": "^2.5.2",
-    "vue-loader": "^13.3.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "axios": "0.19.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.1",
@@ -47,6 +42,7 @@
     "shelljs": "^0.7.6",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
+    "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
