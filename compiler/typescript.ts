@@ -19,7 +19,7 @@ function f2(arr: number[]): number[] {
 }
 `
 
-const syntaxCompiler = (code) => {
+const syntaxCompiler = (code): Boolean => {
     const OPEN_BRACKET = ['[', '{', '(']
     const CLOSE_BRACKET = [']', '}', ')']
     const bracketList = code
@@ -47,9 +47,9 @@ const syntaxCompiler = (code) => {
             throw new Error(`syntax Error ${stack[stack.length - 1]}`)
         else return true
     }
-    bracketCheck()
+    return bracketCheck()
 }
-const typeCompiler = (code) => {
+const typeCompiler = (code): Boolean => {
     const result = {
         variables: [],
         functions: [],
@@ -88,9 +88,13 @@ const typeCompiler = (code) => {
         })
         return type.every((v, i) => v === result[i])
     }
-    variablesF()
+    return variablesF()
 }
-const generatorCompiler = () => {}
+const generatorCompiler = (code) => code.replace(/\:(\s)?[a-z|\[\]]+/gi, '')
 
-syntaxCompiler(code)
-typeCompiler(code)
+const taskAll = () => {
+    if (!syntaxCompiler(code)) return
+    else if (typeCompiler(code)) return
+    else return generatorCompiler(code)
+}
+taskAll()
