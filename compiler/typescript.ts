@@ -7,10 +7,17 @@ const f = (n: number): number => {
 f(num)
 
 const code = `var str: string = 'sai'
+let num: number = 1
+const arr: number[] = [1, 2, 3]
+const obj: Object = {name: 'sai'}
+const isBoolean: boolean = false
+const isNull: null = null
+const isUndefined: undefined = undefined
 
 function f2(arr: number[]): number[] {
     return arr
-}`
+}
+`
 
 const syntaxCompiler = (code) => {
     const OPEN_BRACKET = ['[', '{', '(']
@@ -42,7 +49,48 @@ const syntaxCompiler = (code) => {
     }
     bracketCheck()
 }
-const typeCompiler = () => {}
+const typeCompiler = (code) => {
+    const result = {
+        variables: [],
+        functions: [],
+    }
+    const variablesF = () => {
+        const key = code.match(
+            /(var|let|const) [a-z|0-9|\_]+(\:(\s?)[a-z|\[|\]]+.)?/gi
+        )
+        const type = code
+            .match(/\:(\s)?[a-z|\[\]]+/gi)
+            .map((v) => v.replace(/[\:|\s]/g, ''))
+            .splice(0, key.length)
+        const value = code
+            .match(/\=(\s?)+.+/gi)
+            .map((v) => v.replace(/\=/g, '').trimStart())
+        const result = type.map((type, i) => {
+            if (isNaN(+value[i])) {
+                if (value[i].match(/true|false/)) return 'boolean'
+                else if (value[i].match(/null/)) return 'null'
+                else if (value[i].match(/undefined/)) return 'undefined'
+                else if (
+                    value[i].match(/[\{|\}|\:]/g) &&
+                    value[i].match(/[\{|\}|\:]/g).length === 3
+                ) {
+                    return 'Object'
+                } else if (
+                    value[i].match(/[\[|\]]/g) &&
+                    value[i].match(/[\[|\]]/g).length === 2
+                ) {
+                    if (value[i][0].match(/a-z/i)) return 'string[]'
+                    else return 'number[]'
+                } else return 'string'
+            } else {
+                return 'number'
+            }
+        })
+        return type.every((v, i) => v === result[i])
+    }
+    variablesF()
+}
 const generatorCompiler = () => {}
 
 syntaxCompiler(code)
+typeCompiler(code)
