@@ -16,6 +16,6 @@
         "appId": "com.myapp.id"
     },
     "dependencies": {
-        "node-notifier": "^6.0.0"
+        "node-notifier": "^8.0.1"
     }
 }
