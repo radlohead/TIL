@@ -22,6 +22,7 @@ const initialState: TodoList = {
 const actionPrefix = 'TODOS'
 const addTodos = createAction<object>(`${actionPrefix}/add`)
 const toggleTodos = createAction<object>(`${actionPrefix}/toggle`)
+const removeTodo = createAction<object>(`${actionPrefix}/remove`)
 
 const reducers = {
     add: (
@@ -42,6 +43,13 @@ const reducers = {
         const targetIndex = list.findIndex((item: Todo) => item.id === id)
         list[targetIndex].isDone = !isDone
     },
+    remove: (
+        { list }: TodoList,
+        { payload: { id, isDone } }: PayloadAction<Todo>
+    ) => {
+        const targetIndex = list.findIndex((item: Todo) => item.id === id)
+        list.splice(targetIndex, 1)
+    },
 }
 const todoSlice = createSlice({
     reducers,
@@ -55,6 +63,7 @@ export const selectTodoList = createSelector(
 export const actions = {
     addTodos,
     toggleTodos,
+    removeTodo,
 }
 
 export const rootReducer = combineReducers({

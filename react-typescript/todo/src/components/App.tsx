@@ -2,7 +2,6 @@ import React, { useState, useCallback, ChangeEvent, KeyboardEvent } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectTodoList, actions, RootState, Todo } from '../store'
 import './App.css'
-import { clearScreenDown } from 'readline'
 
 const TodoEditor = () => {
     const dispatch = useDispatch()
@@ -51,6 +50,12 @@ const TodoList = () => {
         },
         [dispatch]
     )
+    const handleClickButton = useCallback(
+        (item: Todo) => {
+            dispatch(actions.removeTodo(item))
+        },
+        [dispatch]
+    )
 
     console.log(todoList)
 
@@ -68,6 +73,12 @@ const TodoList = () => {
                         <span className={item.isDone ? 'txt-complete' : ''}>
                             {item.text}
                         </span>
+                        <button
+                            type="button"
+                            onClick={handleClickButton.bind({}, item)}
+                        >
+                            삭제
+                        </button>
                     </label>
                 </li>
             ))}
