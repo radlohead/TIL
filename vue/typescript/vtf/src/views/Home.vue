@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="home">
+        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <p>Count: {{ count }}</p>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+    import { Observable } from 'rxjs/Rx'
+    import 'rxjs/add/observable/interval'
+    import 'rxjs/add/operator/filter'
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+    import HelloWorld from '@/components/HelloWorld.vue'
+
+    export default {
+        name: 'Home',
+        data() {
+            return {
+                count: 0,
+            }
+        },
+        created() {
+            const obs = Observable.interval(1000)
+            obs.filter((value) => value % 2 === 0).subscribe(
+                (value) => (this.count = value)
+            )
+        },
+        components: {
+            HelloWorld,
+        },
+    }
 </script>
