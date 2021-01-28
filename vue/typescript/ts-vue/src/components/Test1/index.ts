@@ -1,9 +1,14 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { mapState } from 'vuex'
 
+import testComponent from './test.vue'
+
 @Component({
     template: require('./Test1.html'),
     computed: mapState('popup', ['name', 'storeName']),
+    components: {
+        testComponent,
+    },
 })
 export default class Test1 extends Vue {
     private name!: string

@@ -1,8 +1,10 @@
 <div>
-  Test1 component
-  <h3>Test1 : {{ $store.getters.CONSTANTS.COUNTRY }}</h3>
-  <div>
-    My Name is <span style="color: red">{{ name }}</span>
-  </div>
-  <button @click="openPopup">open popup - get name</button>
+    Test1 component
+    <h3>Test1 : {{ $store.getters.CONSTANTS.COUNTRY }}</h3>
+    <div>
+        <span style="color: red">{{ name }}</span>
+
+        <testComponent />
+    </div>
+    <button @click="openPopup">open popup - get name</button>
 </div>
